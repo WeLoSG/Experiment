@@ -1,0 +1,16 @@
+{
+  "name": "MyApp",
+  "author": "Jason <gisonrg@gmail.com>",
+  "private": "true",
+  "devDependencies": {},
+  "dependencies": {
+    "ionic": "~1.2.1",
+    "angular": "~1.4.8",
+    "ngCordova": "~0.1.17-alpha",
+    "angular-resource": "~1.4.8",
+    "lodash": "~3.10.0"
+  },
+  "resolutions": {
+    "angular": "1.4.8"
+  }
+}
