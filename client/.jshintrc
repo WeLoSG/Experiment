@@ -18,7 +18,7 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
-  "predef": [ "google" ],
+  "predef": [ "google", "io" ],
   "globals": {
     "angular": false,
     "cordova": false,
