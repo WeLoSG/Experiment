@@ -10,6 +10,9 @@ app.get('/', function(req, res){
 // Socket
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.on('socket:message', function(socket){
+    console.log('Receive a message');
+  });
 });
 
 // Server

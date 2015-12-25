@@ -34,6 +34,16 @@ angular.module('MyApp', ['ionic', 'ngCordova', 'ngResource'])
         templateUrl: 'templates/main.html',
         controller: 'MainController'
       })
+      .state('app.map', {
+        url: '/map',
+        cache: true,
+        views: {
+          'viewContent': {
+            templateUrl: 'templates/views/map.html',
+            controller: 'MapController'
+          }
+        }
+      })
       .state('app.home', {
         url: '/home',
         cache: true,
