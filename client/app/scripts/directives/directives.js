@@ -13,22 +13,26 @@ angular.module('MyApp')
       scope: {
         onCreate: '&'
       },
-      link: function ($scope, $element, $attr) {
+      link: function($scope, $element, $attr) {
         function initialize() {
           var mapOptions = {
             center: new google.maps.LatLng(1.352083, 103.819836),
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: false
           };
           var map = new google.maps.Map($element[0], mapOptions);
 
-          $scope.onCreate({map: map});
+          $scope.onCreate({
+            map: map
+          });
 
           // Stop the side bar from dragging when mousedown/tapdown on the map
-          google.maps.event.addDomListener($element[0], 'mousedown', function (e) {
-            e.preventDefault();
-            return false;
-          });
+          google.maps.event.addDomListener($element[0], 'mousedown',
+            function(e) {
+              e.preventDefault();
+              return false;
+            });
         }
 
         if (document.readyState === 'complete') {
