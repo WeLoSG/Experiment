@@ -68,6 +68,16 @@ angular.module('MyApp', ['ionic', 'ngCordova', 'ngResource'])
         }
       }
     })
+    .state('app.account', {
+      url: '/account',
+      cache: true,
+      views: {
+        'viewContent': {
+          templateUrl: 'templates/views/account.html',
+          controller: 'AccountController'
+        }
+      }
+    })
     .state('app.settings', {
       url: '/settings',
       cache: true,
