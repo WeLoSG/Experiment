@@ -19,7 +19,8 @@ angular.module('MyApp')
             center: new google.maps.LatLng(1.352083, 103.819836),
             zoom: 11,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            mapTypeControl: false
+            mapTypeControl: false,
+            streetViewControl: false
           };
           var map = new google.maps.Map($element[0], mapOptions);
 

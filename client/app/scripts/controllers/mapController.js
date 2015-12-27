@@ -7,20 +7,30 @@
  * # MapController
  */
 angular.module('MyApp')
-  .controller('MapController', function($scope, $ionicLoading, socket) {
-    socket.on('connect', function() {
-      console.log('connected');
-    });
+  .controller('MapController', function($scope, $ionicLoading, socket,
+    $sessionStorage) {
+    var markers = [];
 
-    socket.on('socket:broadcast', function(data) {
-      console.log('New message received: ' + data.message);
-    });
+    $scope.userid = $sessionStorage.get('userid', null);
 
-    $scope.sendLocation = function(location) {
-      socket.emit('socket:message', {
-        message: 'Hi there'
+    // Adds a marker to the map and push to the array.
+    function addMarker(location) {
+      var marker = new google.maps.Marker({
+        position: location,
+        map: $scope.map
       });
-    };
+
+      // Add info window
+      var infoWindow = new google.maps.InfoWindow({
+        content: 'This is a new marker',
+        noSupress: true
+      });
+
+      marker.addListener('click', function() {
+        infoWindow.open($scope.map, marker);
+      });
+      markers.push(marker);
+    }
 
     $scope.initMap = function(map) {
       $scope.map = map;
@@ -30,8 +40,7 @@ angular.module('MyApp')
       }
 
       $scope.loading = $ionicLoading.show({
-        content: 'Getting current location...',
-        showBackdrop: false
+        template: 'Getting current location'
       });
 
       navigator.geolocation.getCurrentPosition(function(pos) {
@@ -39,10 +48,14 @@ angular.module('MyApp')
           pos.coords.longitude);
         $scope.map.setCenter(myLocation);
         $scope.map.setZoom(14);
-        var marker = new google.maps.Marker({
-          position: myLocation,
-          map: map,
-        });
+
+        addMarker(myLocation);
+
+        var LatLng = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        };
+        sendLocation('init', LatLng);
 
         $ionicLoading.hide();
       }, function(error) {
@@ -50,4 +63,20 @@ angular.module('MyApp')
         $ionicLoading.hide();
       });
     };
+
+    // Socket
+    function sendLocation(eventName, location) {
+      socket.emit(eventName, {
+        id: $scope.userid,
+        location: location
+      });
+    }
+
+    socket.on('connect', function() {
+      console.log('connected');
+    });
+
+    socket.on('syncCord', function(data) {
+      console.log('New message received: ' + data);
+    });
   });
